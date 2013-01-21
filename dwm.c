@@ -233,7 +233,9 @@ static void monocle(Monitor *m);
 static void motionnotify(XEvent *e);
 static void movemouse(const Arg *arg);
 static Client *nexttiled(Client *c);
+static void nextlayout(const Arg *arg);
 static void pop(Client *);
+static void prevlayout(const Arg *arg);
 static void propertynotify(XEvent *e);
 static void quit(const Arg *arg);
 static Monitor *recttomon(int x, int y, int w, int h);
@@ -1452,11 +1454,31 @@ nexttiled(Client *c) {
 }
 
 void
+nextlayout(const Arg *arg) {
+	Layout *l;
+	for (l=(Layout *)layouts;l != selmon->lt[selmon->sellt];l++);
+	if (l->symbol && (l + 1)->symbol)
+		setlayout(&((Arg) { .v = (l + 1) }));
+	else
+		setlayout(&((Arg) { .v = &layouts[0] }));
+}
+
+void
 pop(Client *c) {
 	detach(c);
 	attach(c);
 	focus(c);
 	arrange(c->mon);
+}
+
+void
+prevlayout(const Arg *arg) {
+	Layout *l;
+	for (l=(Layout *)layouts;l != selmon->lt[selmon->sellt];l++);
+	if (l != layouts && (l - 1)->symbol)
+		setlayout(&((Arg) { .v = (l - 1) }));
+	else
+		setlayout(&((Arg) { .v = &layouts[LENGTH(layouts) - 2] }));
 }
 
 void
