@@ -228,6 +228,7 @@ static void setup(void);
 static void showhide(Client *c);
 static void sigchld(int unused);
 static void spawn(const Arg *arg);
+static void swapfocus();
 static void tag(const Arg *arg);
 static void tagmon(const Arg *arg);
 static int textnw(const char *text, unsigned int len);
@@ -257,6 +258,7 @@ static int xerrorstart(Display *dpy, XErrorEvent *ee);
 static void zoom(const Arg *arg);
 
 /* variables */
+static Client *prevclient = NULL;
 static const char broken[] = "broken";
 static char stext[256];
 static int screen;
@@ -1736,6 +1738,14 @@ spawn(const Arg *arg) {
 }
 
 void
+swapfocus(){
+	Client *c;
+	for(c = selmon->clients; c && c != prevclient; c = c->next) ;
+	if(c == prevclient)
+		focus(prevclient);
+}
+
+void
 tag(const Arg *arg) {
 	if(selmon->sel && arg->ui & TAGMASK) {
 		selmon->sel->tags = arg->ui & TAGMASK;
@@ -1889,6 +1899,7 @@ void
 unfocus(Client *c, Bool setfocus) {
 	if(!c)
 		return;
+	prevclient = c;
 	grabbuttons(c, False);
 	XSetWindowBorder(dpy, c->win, dc.norm[ColBorder]);
 	if(setfocus)
@@ -2252,6 +2263,7 @@ xerrorstart(Display *dpy, XErrorEvent *ee) {
 void
 zoom(const Arg *arg) {
 	Client *c = selmon->sel;
+	prevclient = selmon->clients;
 
 	if(!selmon->lt[selmon->sellt]->arrange
 	|| (selmon->sel && selmon->sel->isfloating))
