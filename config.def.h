@@ -14,6 +14,8 @@ static const unsigned int systrayspacing = 2;   /* systray spacing */
 static const Bool showsystray       = True;     /* False means no systray */
 static const Bool showbar           = True;     /* False means no bar */
 static const Bool topbar            = True;     /* False means bottom bar */
+/* False means using the scroll wheel on a window will not change focus */
+static const Bool focusonwheelscroll = False;
 
 /* tagging */
 static const char *tags[] = { "1", "2", "3", "4", "5", "6", "7", "8", "9" };
