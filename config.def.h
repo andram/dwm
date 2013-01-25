@@ -20,6 +20,8 @@ static const Bool focusonwheelscroll = False;
 /* tagging */
 static const char *tags[] = { "1", "2", "3", "4", "5", "6", "7", "8", "9" };
 
+static unsigned int scratchtag = 1 << LENGTH(tags);
+
 static const Rule rules[] = {
 	/* class      instance    title       tags mask     isfloating   monitor */
 	{ "Gimp",     NULL,       NULL,       0,            True,        -1 },
@@ -52,8 +54,11 @@ static const Layout layouts[] = {
 #define SHCMD(cmd) { .v = (const char*[]){ "/bin/sh", "-c", cmd, NULL } }
 
 /* commands */
+static const char terminal[]  = "uxterm";
+static const char scratchpadname[] = "scratchy";
 static const char *dmenucmd[] = { "dmenu_run", "-fn", font, "-nb", normbgcolor, "-nf", normfgcolor, "-sb", selbgcolor, "-sf", selfgcolor, NULL };
-static const char *termcmd[]  = { "uxterm", NULL };
+static const char *termcmd[]  = { terminal, NULL };
+static const char *scratchpadcmd[] = { terminal, "-name", scratchpadname, "-geometry", "80x20", NULL };
 
 static Key keys[] = {
 	/* modifier                     key        function        argument */
