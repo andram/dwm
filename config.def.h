@@ -1,13 +1,16 @@
 /* See LICENSE file for copyright and license details. */
 
 /* appearance */
+#define NUMCOLORS         4             // need at least 3
+static const char colors[NUMCOLORS][ColLast][8] = {
+   // border   foreground  background
+   { "#444444", "#bbbbbb", "#222222" },  // 0 = normal
+   { "#005577", "#eeeeee", "#005577" },  // 1 = selected
+   { "#0066ff", "#0066ff", "#ffffff" },  // 2 = urgent/warning
+   { "#ff0000", "#ffffff", "#ff0000" },  // 3 = error
+   // add more here
+};
 static const char font[]            = "-*-terminus-medium-r-*-*-16-*-*-*-*-*-*-*";
-static const char normbordercolor[] = "#444444";
-static const char normbgcolor[]     = "#222222";
-static const char normfgcolor[]     = "#bbbbbb";
-static const char selbordercolor[]  = "#005577";
-static const char selbgcolor[]      = "#005577";
-static const char selfgcolor[]      = "#eeeeee";
 static const unsigned int borderpx  = 1;        /* border pixel of windows */
 static const unsigned int snap      = 32;       /* snap pixel */
 static const unsigned int systrayspacing = 2;   /* systray spacing */
@@ -56,7 +59,7 @@ static const Layout layouts[] = {
 /* commands */
 static const char terminal[]  = "uxterm";
 static const char scratchpadname[] = "scratchy";
-static const char *dmenucmd[] = { "dmenu_run", "-fn", font, "-nb", normbgcolor, "-nf", normfgcolor, "-sb", selbgcolor, "-sf", selfgcolor, NULL };
+static const char *dmenucmd[] = { "dmenu_run", "-fn", font, "-nb", colors[0][ColBG], "-nf", colors[0][ColFG],"-sb", colors[1][ColBG], "-sf", colors[1][ColFG], NULL };
 static const char *termcmd[]  = { terminal, NULL };
 static const char *scratchpadcmd[] = { terminal, "-name", scratchpadname, "-geometry", "80x20", NULL };
 
