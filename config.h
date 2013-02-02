@@ -25,6 +25,7 @@ static const Rule rules[] = {
 	{ "Gimp",     NULL,       NULL,       0,            True,        -1 },
 	{ "Firefox",  NULL,       NULL,       1 << 7,       False,       -1 },
 	{ "Ding", NULL,     NULL,       1 << 8,       False,       -1 },
+	{ "Wicd-client.py", NULL,     NULL,       1 << 8,       False,       -1 }
 };
 
 /* layout(s) */
@@ -56,7 +57,7 @@ static const char *termcmd[]  = { "urxvt", NULL };
 static const char *mountmanagercmd[]  = { "rd.pl", NULL };
 static const char *winselcmd[]  = { "listwin.sh", NULL };
 static const char *togglefullscreencmd[]  = { "wmctrl", "-r", ":ACTIVE:", "-b", "toggle,fullscreen", NULL };
-static const char *lockscreencmd[]  = { "xscreensaver-command", "-lock", NULL };
+static const char *hibernatecmd[]  = { "sudo", "pm-hibernate", NULL };
 
 
 void
@@ -112,7 +113,7 @@ static Key keys[] = {
 	{ MODKEY,                       XK_w,  spawn,              {.v = winselcmd } }, 
 	{ MODKEY,                       XK_F11,  spawn,              {.v = togglefullscreencmd } }, 
 	{ MODKEY,                       XK_slash,  spawn,          {.v = mountmanagercmd } }, 
-	{ MODKEY|ShiftMask,             XK_BackSpace, spawn,       {.v = lockscreencmd } },
+	{ MODKEY|ShiftMask,             XK_BackSpace, spawn,       {.v = hibernatecmd } },
 	{ MODKEY|ShiftMask,             XK_r,      restart,        {0} }, 
 	{ MODKEY|ShiftMask,             XK_q,      quit,           {0} },
 };
