@@ -55,6 +55,7 @@ static const char *dmenucmd[] = { "dmenu_run", "-fn", font, "-nb", normbgcolor, 
 static const char *termcmd[]  = { "urxvt", NULL };
 static const char *mountmanagercmd[]  = { "rd.pl", NULL };
 static const char *winselcmd[]  = { "listwin.sh", NULL };
+static const char *togglefullscreencmd[]  = { "wmctrl", "-r", ":ACTIVE:", "-b", "toggle,fullscreen", NULL };
 static const char *lockscreencmd[]  = { "xscreensaver-command", "-lock", NULL };
 
 
@@ -103,6 +104,7 @@ static Key keys[] = {
 	TAGKEYS(                        XK_8,                      7)
 	TAGKEYS(                        XK_9,                      8)
 	{ MODKEY,                       XK_w,  spawn,              {.v = winselcmd } }, 
+	{ MODKEY,                       XK_F11,  spawn,              {.v = togglefullscreencmd } }, 
 	{ MODKEY,                       XK_slash,  spawn,          {.v = mountmanagercmd } }, 
 	{ MODKEY|ShiftMask,             XK_BackSpace, spawn,       {.v = lockscreencmd } },
 	{ MODKEY|ShiftMask,             XK_r,      restart,        {0} }, 
