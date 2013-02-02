@@ -173,6 +173,8 @@ static void configure(Client *c);
 static void configurenotify(XEvent *e);
 static void configurerequest(XEvent *e);
 static Monitor *createmon(void);
+static void cycleglobal(const Arg *arg);
+static void cycletiled(const Arg *arg);
 static void destroynotify(XEvent *e);
 static void detach(Client *c);
 static void detachstack(Client *c);
@@ -642,6 +644,61 @@ configurerequest(XEvent *e) {
 		XConfigureWindow(dpy, ev->window, ev->value_mask, &wc);
 	}
 	XSync(dpy, False);
+}
+
+void
+cycleglobal(const Arg *arg)
+{
+	Client *c = selmon->stack, *cn;
+
+	if(!c)
+		return;
+
+	if (c->snext) {
+		unfocus(selmon->sel,False);
+
+		for(cn = c; cn->snext; cn = cn->snext);
+
+		if (arg->i > 0) {
+			if (selmon->sel) {
+				cn->snext = selmon->stack;
+				c = selmon->stack = selmon->stack->snext;
+				cn->snext->snext = NULL;
+			}
+		} else {
+			c = cn;
+		}
+	}
+
+	if(!ISVISIBLE(c)) {
+		c->mon->seltags ^= 1;
+		c->mon->tagset[c->mon->seltags] = c->tags;
+	}
+	focus(c);
+	arrange(c->mon);
+}
+
+void
+cycletiled(const Arg *arg)
+{
+	Client *c = nexttiled(selmon->clients),*cn;
+	if(!selmon->lt[selmon->sellt]->arrange || !c || !(cn=nexttiled(c->next)))
+		return;
+
+	if (arg->i > 0) {
+		detach(c);
+		for(; cn->next; cn = cn->next);
+		cn->next = c;
+		c->next = NULL;
+		c = nexttiled(selmon->clients);
+
+	} else {
+		for(c=cn; (cn=nexttiled(cn->next)) != NULL; c=cn);
+		detach(c);
+		attach(c);
+	}
+	focusstack(arg);
+	arrange(c->mon);
 }
 
 Monitor *
