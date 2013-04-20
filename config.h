@@ -58,7 +58,7 @@ static const char *mountmanagercmd[]  = { "rd.pl", NULL };
 static const char *winselcmd[]  = { "listwin.sh", NULL };
 static const char *togglefullscreencmd[]  = { "wmctrl", "-r", ":ACTIVE:", "-b", "toggle,fullscreen", NULL };
 static const char *hibernatecmd[]  = { "sudo", "pm-hibernate", NULL };
-
+static const char *lockscreencmd[]  = { "xscreensaver-command", "-lock", NULL };
 
 void
 restart(const Arg *arg)
@@ -114,6 +114,7 @@ static Key keys[] = {
 	{ MODKEY,                       XK_F11,  spawn,              {.v = togglefullscreencmd } }, 
 	{ MODKEY,                       XK_slash,  spawn,          {.v = mountmanagercmd } }, 
 	{ MODKEY|ShiftMask,             XK_BackSpace, spawn,       {.v = hibernatecmd } },
+	{ MODKEY|ControlMask,           XK_BackSpace, spawn,       {.v = lockscreencmd } },
 	{ MODKEY|ShiftMask,             XK_r,      restart,        {0} }, 
 	{ MODKEY|ShiftMask,             XK_q,      quit,           {0} },
 };
