@@ -59,7 +59,7 @@ static const char *termcmd[]  = { "urxvt", NULL };
 static const char *mountmanagercmd[]  = { "rd.pl", NULL };
 static const char *winselcmd[]  = { "listwin.sh", NULL };
 static const char *togglefullscreencmd[]  = { "wmctrl", "-r", ":ACTIVE:", "-b", "toggle,fullscreen", NULL };
-static const char *hibernatecmd[]  = { "systemctl", "hybrid-sleep", NULL };
+static const char *hibernatecmd[]  = { "systemctl", "hibernate", NULL };
 static const char *lockscreencmd[]  = { "xscreensaver-command", "-lock", NULL };
 
 void
@@ -81,8 +81,6 @@ static Key keys[] = {
 	{ MODKEY,                       XK_k,      focusstack,     {.i = -1 } },
 	{ MODKEY|ShiftMask,             XK_j,      cycletiled,     {.i = +1 } },
 	{ MODKEY|ShiftMask,             XK_k,      cycletiled,     {.i = -1 } },
-	{ MODKEY|ControlMask,           XK_j,      cycleglobal,    {.i = +1 } },
-	{ MODKEY|ControlMask,           XK_k,      cycleglobal,    {.i = -1 } },
 	{ MODKEY,                       XK_Page_Up, cycleglobal,   {.i = +1 } },
 	{ MODKEY,                       XK_Page_Down, cycleglobal, {.i = -1 } },
 	{ MODKEY,                       XK_i,      incnmaster,     {.i = +1 } },
@@ -113,10 +111,10 @@ static Key keys[] = {
 	TAGKEYS(                        XK_8,                      7)
 	TAGKEYS(                        XK_9,                      8)
 	{ MODKEY,                       XK_w,  spawn,              {.v = winselcmd } }, 
-	{ MODKEY,                       XK_F11,  spawn,              {.v = togglefullscreencmd } }, 
+	{ MODKEY,                       XK_F11,  spawn,            {.v = togglefullscreencmd } }, 
 	{ MODKEY,                       XK_slash,  spawn,          {.v = mountmanagercmd } }, 
 	{ MODKEY|ShiftMask,             XK_BackSpace, spawn,       {.v = hibernatecmd } },
-	{ MODKEY|ControlMask,           XK_BackSpace, spawn,       {.v = lockscreencmd } },
+	{ MODKEY,                       XK_BackSpace, spawn,       {.v = lockscreencmd } },
 	{ MODKEY|ShiftMask,             XK_r,      restart,        {0} }, 
 	{ MODKEY|ShiftMask,             XK_q,      quit,           {0} },
 };
