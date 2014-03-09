@@ -1,14 +1,14 @@
 /* See LICENSE file for copyright and license details. */
 
 /* appearance */
-static const char font[]            = "Liberation Mono:pixelsize=12:antialias=false:autohint=false";
+static const char font[]            = "Liberation Mono:pixelsize=14:antialias=true:autohint=false";
 static const char normbordercolor[] = "#444444";
 static const char normbgcolor[]     = "#222222";
 static const char normfgcolor[]     = "#bbbbbb";
-static const char selbordercolor[]  = "#005577";
+static const char selbordercolor[]  = "#dd5577";
 static const char selbgcolor[]      = "#005577";
 static const char selfgcolor[]      = "#eeeeee";
-static const unsigned int borderpx  = 1;        /* border pixel of windows */
+static const unsigned int borderpx  = 2;        /* border pixel of windows */
 static const unsigned int snap      = 32;       /* snap pixel */
 static const unsigned int systrayspacing = 2;   /* systray spacing */
 static const Bool showsystray       = True;     /* False means no systray */
@@ -25,13 +25,15 @@ static const Rule rules[] = {
 	 */
 	/* class      instance    title       tags mask     isfloating   monitor */
 	{ "Gimp",     NULL,       NULL,       0,            True,        -1 },
-	{ "Firefox",  NULL,       NULL,       1 << 8,       False,       -1 },
+	{ "Firefox",  NULL,       NULL,       1 << 7,       False,       -1 },
+	{ "Ding", NULL,     NULL,       1 << 8,       False,       -1 },
+	{ "URxvt", "tmux",     NULL,       1 << 8,       False,       -1 }
 };
 
 /* layout(s) */
 static const float mfact      = 0.55; /* factor of master area size [0.05..0.95] */
 static const int nmaster      = 1;    /* number of clients in master area */
-static const Bool resizehints = True; /* True means respect size hints in tiled resizals */
+static const Bool resizehints = False; /* True means respect size hints in tiled resizals */
 
 static const Layout layouts[] = {
 	/* symbol     arrange function */
@@ -41,7 +43,7 @@ static const Layout layouts[] = {
 };
 
 /* key definitions */
-#define MODKEY Mod1Mask
+#define MODKEY Mod4Mask
 #define TAGKEYS(KEY,TAG) \
 	{ MODKEY,                       KEY,      view,           {.ui = 1 << TAG} }, \
 	{ MODKEY|ControlMask,           KEY,      toggleview,     {.ui = 1 << TAG} }, \
@@ -53,7 +55,22 @@ static const Layout layouts[] = {
 
 /* commands */
 static const char *dmenucmd[] = { "dmenu_run", "-fn", font, "-nb", normbgcolor, "-nf", normfgcolor, "-sb", selbgcolor, "-sf", selfgcolor, NULL };
-static const char *termcmd[]  = { "uxterm", NULL };
+static const char *termcmd[]  = { "urxvt", NULL };
+static const char *mountmanagercmd[]  = { "rd.pl", NULL };
+static const char *winselcmd[]  = { "listwin.sh", NULL };
+static const char *togglefullscreencmd[]  = { "wmctrl", "-r", ":ACTIVE:", "-b", "toggle,fullscreen", NULL };
+static const char *hibernatecmd[]  = { "systemctl", "hibernate", NULL };
+static const char *lockscreencmd[]  = { "xscreensaver-command", "-lock", NULL };
+
+void
+restart(const Arg *arg)
+{
+  if (arg->v) {
+    execvp(((char **)arg->v)[0], (char **)arg->v);
+  } else {
+    execlp("dwm", "dwm", NULL);
+  }
+} 
 
 static Key keys[] = {
 	/* modifier                     key        function        argument */
@@ -64,8 +81,8 @@ static Key keys[] = {
 	{ MODKEY,                       XK_k,      focusstack,     {.i = -1 } },
 	{ MODKEY|ShiftMask,             XK_j,      cycletiled,     {.i = +1 } },
 	{ MODKEY|ShiftMask,             XK_k,      cycletiled,     {.i = -1 } },
-	{ MODKEY|ControlMask,           XK_j,      cycleglobal,    {.i = +1 } },
-	{ MODKEY|ControlMask,           XK_k,      cycleglobal,    {.i = -1 } },
+	{ MODKEY,                       XK_Page_Up, cycleglobal,   {.i = +1 } },
+	{ MODKEY,                       XK_Page_Down, cycleglobal, {.i = -1 } },
 	{ MODKEY,                       XK_i,      incnmaster,     {.i = +1 } },
 	{ MODKEY,                       XK_d,      incnmaster,     {.i = -1 } },
 	{ MODKEY,                       XK_h,      setmfact,       {.f = -0.05} },
@@ -93,6 +110,12 @@ static Key keys[] = {
 	TAGKEYS(                        XK_7,                      6)
 	TAGKEYS(                        XK_8,                      7)
 	TAGKEYS(                        XK_9,                      8)
+	{ MODKEY,                       XK_w,  spawn,              {.v = winselcmd } }, 
+	{ MODKEY,                       XK_F11,  spawn,            {.v = togglefullscreencmd } }, 
+	{ MODKEY,                       XK_slash,  spawn,          {.v = mountmanagercmd } }, 
+	{ MODKEY|ShiftMask,             XK_BackSpace, spawn,       {.v = hibernatecmd } },
+	{ MODKEY,                       XK_BackSpace, spawn,       {.v = lockscreencmd } },
+	{ MODKEY|ShiftMask,             XK_r,      restart,        {0} }, 
 	{ MODKEY|ShiftMask,             XK_q,      quit,           {0} },
 };
 
