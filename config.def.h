@@ -59,7 +59,7 @@ static const char *termcmd[]  = { "urxvt", NULL };
 static const char *mountmanagercmd[]  = { "rd.pl", NULL };
 static const char *winselcmd[]  = { "listwin.sh", NULL };
 static const char *togglefullscreencmd[]  = { "wmctrl", "-r", ":ACTIVE:", "-b", "toggle,fullscreen", NULL };
-static const char *hibernatecmd[]  = { "systemctl", "hibernate", NULL };
+static const char *hibernatecmd[]  = { "systemctl", "hybrid-sleep", NULL };
 static const char *lockscreencmd[]  = { "xscreensaver-command", "-lock", NULL };
 
 void
