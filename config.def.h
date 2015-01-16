@@ -27,7 +27,8 @@ static const Rule rules[] = {
 	{ "Gimp",     NULL,       NULL,       0,            True,        -1 },
 	{ "Firefox",  NULL,       NULL,       1 << 7,       False,       -1 },
 	{ "Ding", NULL,     NULL,       1 << 8,       False,       -1 },
-	{ "URxvt", "tmux",     NULL,       1 << 8,       False,       -1 }
+	{ "URxvt", "tmux",     NULL,       1 << 8,       False,       -1 },
+	{ "qemu-system-x86_64", NULL,     NULL,   0,       True,       -1 }
 };
 
 /* layout(s) */
