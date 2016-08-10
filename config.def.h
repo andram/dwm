@@ -64,6 +64,11 @@ static const char *togglefullscreencmd[]  = { "wmctrl", "-r", ":ACTIVE:", "-b", 
 static const char *hibernatecmd[]  = { "systemctl", "hybrid-sleep", NULL };
 static const char *lockscreencmd[]  = { "xscreensaver-command", "-lock", NULL };
 
+static const char *activate_firefox[]  = { "xdotool", "search", "--onlyvisible", "--classname", "Navigator", "windowactivate", NULL };
+static const char *activate_emacs[]  = { "xdotool", "search", "--onlyvisible", "--classname", "emacs", "windowactivate", NULL };
+static const char *activate_tmux[]  = { "xdotool", "search", "--onlyvisible", "--classname", "tmux", "windowactivate", NULL };
+
+
 void
 restart(const Arg *arg)
 {
@@ -117,6 +122,9 @@ static Key keys[] = {
 	{ MODKEY,                       XK_slash,  spawn,          {.v = mountmanagercmd } }, 
 	{ MODKEY|ShiftMask,             XK_BackSpace, spawn,       {.v = hibernatecmd } },
 	{ MODKEY,                       XK_BackSpace, spawn,       {.v = lockscreencmd } },
+	{ MODKEY,                       XK_F7,     spawn,          {.v = activate_emacs } },
+	{ MODKEY,                       XK_F8,     spawn,          {.v = activate_firefox } },
+	{ MODKEY,                       XK_F9,     spawn,          {.v = activate_tmux } },
 	{ MODKEY|ShiftMask,             XK_r,      restart,        {0} }, 
 	{ MODKEY|ShiftMask,             XK_q,      quit,           {0} },
 };
