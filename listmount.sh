@@ -25,11 +25,11 @@ if [ $? -eq 0 ]; then
     else
         action="unmount"
     fi
-fi
-
-error=$(udevil --quiet "$action" "$1" 2>&1)
-
-if [ $? -ne 0 ]; then
-    notify-send "Could not $action $1:\n $error"
-fi
     
+    error=$(udevil --quiet "$action" "$1" 2>&1)
+
+    if [ $? -ne 0 ]; then
+        notify-send "Could not $action $1:\n $error"
+    fi
+
+fi
