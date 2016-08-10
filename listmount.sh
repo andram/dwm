@@ -21,8 +21,15 @@ result=$(echo "$result" | dmenu -p "select device to mount/unmount" -i -l $count
 if [ $? -eq 0 ]; then
     set -- $result
     if [ "$2" = "U" ]; then
-        udevil --quiet mount "$1"
+        action="mount"
     else
-        udevil --quiet unmount "$1"
+        action="unmount"
     fi
 fi
+
+error=$(udevil --quiet "$action" "$1" 2>&1)
+
+if [ $? -ne 0 ]; then
+    notify-send "Could not $action $1:\n $error"
+fi
+    
