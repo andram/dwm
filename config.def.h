@@ -65,8 +65,11 @@ static const char *togglefullscreencmd[]  = { "wmctrl", "-r", ":ACTIVE:", "-b", 
 static const char *hibernatecmd[]  = { "systemctl", "hybrid-sleep", NULL };
 static const char *lockscreencmd[]  = { "xscreensaver-command", "-lock", NULL };
 
-static const char *activate_firefox[]  = { "xdotool", "search", "--onlyvisible", "--classname", "Navigator", "windowactivate", NULL };
+static const char *activate_jabref[]  = { "xdotool", "search", "--onlyvisible", "--classname", "sun-awt-X11-XFramePeer",
+                                          "windowactivate", NULL };
+static const char *activate_lyx[]  = { "xdotool", "search", "--onlyvisible", "--classname", "lyx", "windowactivate", NULL };
 static const char *activate_emacs[]  = { "xdotool", "search", "--onlyvisible", "--classname", "emacs", "windowactivate", NULL };
+static const char *activate_firefox[]  = { "xdotool", "search", "--onlyvisible", "--classname", "Navigator", "windowactivate", NULL };
 static const char *activate_tmux[]  = { "xdotool", "search", "--onlyvisible", "--classname", "tmux", "windowactivate", NULL };
 
 
@@ -123,6 +126,8 @@ static Key keys[] = {
 	{ MODKEY,                       XK_slash,  spawn,          {.v = mountmanagercmd } }, 
 	{ MODKEY|ShiftMask,             XK_BackSpace, spawn,       {.v = hibernatecmd } },
 	{ MODKEY,                       XK_BackSpace, spawn,       {.v = lockscreencmd } },
+	{ MODKEY,                       XK_F5,     spawn,          {.v = activate_jabref } },
+	{ MODKEY,                       XK_F6,     spawn,          {.v = activate_lyx } },
 	{ MODKEY,                       XK_F7,     spawn,          {.v = activate_emacs } },
 	{ MODKEY,                       XK_F8,     spawn,          {.v = activate_firefox } },
 	{ MODKEY,                       XK_F9,     spawn,          {.v = activate_tmux } },
@@ -138,6 +143,7 @@ static Button buttons[] = {
 	{ ClkLtSymbol,          0,              Button3,        setlayout,      {.v = &layouts[2]} },
 	{ ClkWinTitle,          0,              Button2,        zoom,           {0} },
 	{ ClkStatusText,        0,              Button2,        spawn,          {.v = termcmd } },
+	{ ClkClientWin,         MODKEY|ShiftMask, Button1,      resizemouse,    {0} },
 	{ ClkClientWin,         MODKEY,         Button1,        movemouse,      {0} },
 	{ ClkClientWin,         MODKEY,         Button2,        togglefloating, {0} },
 	{ ClkClientWin,         MODKEY,         Button3,        resizemouse,    {0} },
