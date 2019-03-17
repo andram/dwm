@@ -61,10 +61,10 @@ static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() 
 static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", font, "-nb", normbgcolor, "-nf", normfgcolor, "-sb", selbgcolor, "-sf", selfgcolor, NULL };
 static const char *termcmd[]  = { "urxvt", NULL };
 static const char *mountmanagercmd[]  = { "listmount.sh", NULL };
-static const char *winselcmd[]  = { "listwin.sh", NULL };
 static const char *togglefullscreencmd[]  = { "wmctrl", "-r", ":ACTIVE:", "-b", "toggle,fullscreen", NULL };
 static const char *hibernatecmd[]  = { "systemctl", "hybrid-sleep", NULL };
 static const char *lockscreencmd[]  = { "xscreensaver-command", "-lock", NULL };
+static const char *roficmd[]  = { "rofi", "-show", "combi", "-combi-modi", "window,drun", NULL };
 
 static const char *activate_jabref[]  = { "xdotool", "search", "--onlyvisible", "--classname", "sun-awt-X11-XFramePeer",
                                           "windowactivate", NULL };
@@ -122,7 +122,7 @@ static Key keys[] = {
 	TAGKEYS(                        XK_7,                      6)
 	TAGKEYS(                        XK_8,                      7)
 	TAGKEYS(                        XK_9,                      8)
-	{ MODKEY,                       XK_w,  spawn,              {.v = winselcmd } }, 
+	{ MODKEY,                       XK_w,  spawn,              {.v = roficmd } }, 
 	{ MODKEY,                       XK_F11,  spawn,            {.v = togglefullscreencmd } }, 
 	{ MODKEY,                       XK_slash,  spawn,          {.v = mountmanagercmd } }, 
 	{ MODKEY|ShiftMask,             XK_BackSpace, spawn,       {.v = hibernatecmd } },
