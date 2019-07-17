@@ -72,6 +72,7 @@ static const char *activate_lyx[]  = { "xdotool", "search", "--onlyvisible", "--
 static const char *activate_emacs[]  = { "xdotool", "search", "--onlyvisible", "--classname", "emacs", "windowactivate", NULL };
 static const char *activate_firefox[]  = { "xdotool", "search", "--onlyvisible", "--classname", "Navigator", "windowactivate", NULL };
 static const char *activate_tmux[]  = { "xdotool", "search", "--onlyvisible", "--classname", "tmux", "windowactivate", NULL };
+static const char *xrefresh[]  = { "xrefresh", NULL };
 
 
 void
@@ -127,6 +128,7 @@ static Key keys[] = {
 	{ MODKEY,                       XK_slash,  spawn,          {.v = mountmanagercmd } }, 
 	{ MODKEY|ShiftMask,             XK_BackSpace, spawn,       {.v = hibernatecmd } },
 	{ MODKEY,                       XK_BackSpace, spawn,       {.v = lockscreencmd } },
+        { MODKEY,                       XK_r, spawn,               {.v = xrefresh } },
 	{ MODKEY,                       XK_F5,     spawn,          {.v = activate_jabref } },
 	{ MODKEY,                       XK_F6,     spawn,          {.v = activate_lyx } },
 	{ MODKEY,                       XK_F7,     spawn,          {.v = activate_emacs } },
