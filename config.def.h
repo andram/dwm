@@ -29,6 +29,7 @@ static const Rule rules[] = {
 	{ "firefox",  NULL,       NULL,       1 << 7,       False,       -1 },
 	{ "Ding",     NULL,       NULL,       1 << 8,       False,       -1 },
 	{ "URxvt",    "tmux",     NULL,       1 << 8,       False,       -1 },
+	{ "konsole",    "tmux",     NULL,       1 << 8,       False,       -1 },
 	{ "Qemu-system-x86_64", NULL,     NULL,   0,       True,       -1 },
 	{ "feh", NULL,     NULL,   0,       True,       -1 }
 };
@@ -59,7 +60,7 @@ static const Layout layouts[] = {
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", font, "-nb", normbgcolor, "-nf", normfgcolor, "-sb", selbgcolor, "-sf", selfgcolor, NULL };
-static const char *termcmd[]  = { "urxvt", NULL };
+static const char *termcmd[]  = { "konsole", NULL };
 static const char *mountmanagercmd[]  = { "listmount.sh", NULL };
 static const char *togglefullscreencmd[]  = { "wmctrl", "-r", ":ACTIVE:", "-b", "toggle,fullscreen", NULL };
 static const char *hibernatecmd[]  = { "systemctl", "hybrid-sleep", NULL };
